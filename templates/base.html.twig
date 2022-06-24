@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+                {# Run composer require symfony/webpack-encore-bundle to start using Symfony UX #}
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
@@ -14,6 +14,31 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <a href="/student">Students</a>
+            <a href="/group">Groups</a>
+            <a href="/lesson">Lessons</a>
+            <a href="/teacher">Teachers</a>
+            <a href="/subject">Subjects</a>
+            <a href="/logout">Logout</a>
+            {% block body %}{% endblock %}
+        {% else %}
+          <a href="/register">Registration</a>
+            <a href="/login">Login</a>
+        <form action="{{ path('app_login') }}" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="_username"/>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="_password"/>
+
+        {# If you want to control the URL the user is redirected to on success
+        <input type="hidden" name="_target_path" value="/account"/> #}
+        <br>
+
+        <button type="submit">Войти</button>
+    </form>
+        {% endif %}
+
     </body>
 </html>

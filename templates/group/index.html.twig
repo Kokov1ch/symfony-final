@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    <h1>Groups</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>KnowledgeLevel</th>
+                <th>Lesson</th>
+                <th>CountOfStudents</th>
+                <th>Students</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for group in groups %}
+            <tr>
+                <td>{{ group.id }}</td>
+                <td>{{ group.KnowledgeLevel }}</td>
+                <td>{{ group.Lesson }}</td>
+                <td>{{countStudents[group.id]}}</td>
+                {% for student in group.GroupStudents %}
+                <td>{{student}}</td>
+                {% endfor %}
+                <td>
+                    <a href="{{ path('app_group_show', {'id': group.id}) }}">show</a>
+                    <a href="{{ path('app_group_edit', {'id': group.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_group_new') }}">Create new</a>
+{% endblock %}
